@@ -15,7 +15,7 @@ def weighted_mse_loss(pred, target, weights):
 class ReplayBuffer:
     """Fixed-size buffer to store experience tuples."""
 
-    def __init__(self, action_size, buffer_size, batch_size, seed):
+    def __init__(self, action_size, buffer_size, batch_size, seed, use_prioritized_replay):
         """Initialize a ReplayBuffer object.
 
         Inputs:
@@ -23,6 +23,7 @@ class ReplayBuffer:
             buffer_size (int): maximum size of buffer
             batch_size (int): size of each training batch
             seed (int): random seed
+            use_prioritized_replay (boolean)
         """
         self.action_size = action_size
         self.memory = deque(maxlen=buffer_size)
@@ -30,6 +31,7 @@ class ReplayBuffer:
         self.batch_size = batch_size
         self.experience = namedtuple("Experience", field_names=["state", "action", "reward", "next_state", "done"])
         self.seed = random.seed(seed)
+        self.use_prioritized_replay = use_prioritized_replay
     
     def add(self, state, action, reward, next_state, done):
         """Add a new experience to memory.
@@ -43,7 +45,10 @@ class ReplayBuffer:
         """
         e = self.experience(state, action, reward, next_state, done)
         self.memory.append(e)
-        self.weights.append(10)
+        if self.use_prioritized_replay:
+            self.weights.append(10)
+        else:
+            self.weights.append(1)
     
     def sample(self):
         """Randomly sample a batch of experiences from memory."""
@@ -74,7 +79,7 @@ class Agent():
     """
     
     def __init__(self, state_size, action_size, seed, hidden_sizes_list, num_frames=2, num_iters_learn=1, update_every=4,\
-                 batch_size=128, gamma=0.99, buffer_size=int(1e6), update_target_network_every=1, lr0=1e-3):
+                 batch_size=128, gamma=0.99, buffer_size=int(1e5), update_target_network_every=1, lr0=1e-3, use_prioritized_replay=True):
         """ Initialize an Agent object.
         
         Inputs:
@@ -90,6 +95,7 @@ class Agent():
             buffer_size (int, optional): Maximum capacity of the replay buffer (default 1e5).
             update_target_network_every (int, optional): How often to update the target network (default 200).
             lr0 (float, optional): Initial learning rate (default 1e-3).
+            use_prioritized_replay (boolean, optional): Whether to use prioritized (instead of regular) experience replay (default True).
         """
         self.action_size = action_size
         self.state_size = state_size
@@ -100,6 +106,7 @@ class Agent():
         self.batch_size = batch_size
         self.gamma = gamma
         self.lr0 = lr0
+        self.use_prioritized_replay = use_prioritized_replay
         self.update_target_network_every = update_target_network_every
         self.QNetwork_main = QNetwork(state_size, action_size, num_frames, seed, hidden_sizes_list).to(device)
         self.QNetwork_target = QNetwork(state_size, action_size, num_frames, seed + 1, hidden_sizes_list).to(device)
@@ -108,7 +115,7 @@ class Agent():
         self.loss_fn = nn.MSELoss()
 
         # Replay memory
-        self.memory = ReplayBuffer(action_size, buffer_size, batch_size, seed)
+        self.memory = ReplayBuffer(action_size, buffer_size, batch_size, seed, use_prioritized_replay)
         # Initialize time step (for updating every "update_every" steps)
         self.t_step = 0
 
@@ -174,7 +181,8 @@ class Agent():
             loss = weighted_mse_loss(predictions, targets, torch.from_numpy(is_weights).float())
             loss.backward()
             self.optimizer_main.step()
-        self.memory.update_weights(indices, np.power(0.05 + errors.abs().data.numpy(), 0.5))
+        if self.use_prioritized_replay:
+            self.memory.update_weights(indices, np.power(0.05 + errors.abs().data.numpy(), 0.5))
         
         if self.t_step % self.update_target_network_every == 0:
             self.soft_update(self.QNetwork_main, self.QNetwork_target, 1e-3)
