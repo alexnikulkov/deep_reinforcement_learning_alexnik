@@ -29,7 +29,7 @@ The task is episodic, and in order to solve the environment, the agent must get 
 
 3. Install [Unity MLAgents](https://github.com/Unity-Technologies/ml-agents).
 
-4. Run the Navigation.ipynb notebook in Jupyter.
+4. Run the Report.ipynb notebook in Jupyter.
 
 ## Methods
 
