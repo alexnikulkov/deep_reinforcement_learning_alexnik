@@ -1,8 +1,8 @@
 [//]: # (Image References)
 
 [actor_network]: images/actor_network.png "Actor Network"
-[critic_network]: images/critic_network.png&s=50 "Critic Network"
-[rewards]: images/rewards.png&s=50 "Rewards"
+[critic_network]: images/critic_network.png "Critic Network"
+[rewards]: images/rewards.png "Rewards"
 
 # Continuosus Control Report
 
