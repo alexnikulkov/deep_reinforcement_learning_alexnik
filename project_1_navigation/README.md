@@ -2,7 +2,7 @@
 
 [trained_agent]: images/trained_agent.gif "Trained Agent"
 
-# Udacity Deel Reinforcement Learning Nanodegree Project 1: Navigation
+# Udacity Deep Reinforcement Learning Nanodegree Project 1: Navigation
 
 ## Introduction
 
