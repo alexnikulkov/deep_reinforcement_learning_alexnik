@@ -18,7 +18,7 @@ The task is episodic, and in order to solve the environment, the agent must get 
 
 20 identical and independent agents are synchronously simulated in parallel to accelerate learning. All agents use the same copy of the network to take actions and at every step the experiences of all 20 agensts are added to the replay buffer. The networks are updated at each step by sampling from the replay buffer.
 
-## Getting Started
+## Instructions
 
 1. Make sure you have Python 3.6 + Jupyter and some standard libraries (pandas, numpy) installed.
 
@@ -32,4 +32,4 @@ The task is episodic, and in order to solve the environment, the agent must get 
 	- Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86.zip)
 	- Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86_64.zip)
 
-4. Run the Continuous_Control.ipynb notebook in Jupyter.
+5. Run the Continuous_Control.ipynb notebook in Jupyter.
