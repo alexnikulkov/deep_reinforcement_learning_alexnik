@@ -1,6 +1,6 @@
 [//]: # (Image References)
 
-[trained_agent]: images/trained_agents.gif "Trained Agents"
+[trained_agents]: images/trained_agents.gif "Trained Agents"
 
 # Udacity Deep Reinforcement Learning Nanodegree Project 3: Collaboration and Competition
 
