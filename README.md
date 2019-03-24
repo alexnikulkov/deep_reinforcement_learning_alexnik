@@ -4,4 +4,4 @@ I am taking the the [Udacity Deep Reinforcement Learning nanodegree](https://www
 
 1. [Project 1: Navigation](project_1_navigation/)
 2. [Project 2: Continuous Control](project_2_continuous_control/)
-3. Project 3: TODO
+3. [Project 3: Collaborative Multi-Agent RL](project_3_collab_competition)

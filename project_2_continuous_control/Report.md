@@ -4,7 +4,7 @@
 [critic_network]: images/critic_network.png "Critic Network"
 [rewards]: images/rewards.png "Rewards"
 
-# Continuosus Control Report
+# Continuosus Control Project Report
 
 ## Learning Algorithm
 
@@ -56,4 +56,4 @@ The agent learns very rapidly. It first reaches per-episode average reward of 30
 
 The algorthm can be further improved by:
 1. Implementing prioritized experience replay to focus learning on the most important experiences.
-2. Changing the actor to produce not deterministic actions, but sotchastic actions which would naturally explore.
+2. Changing the actor to produce not deterministic actions, but stochastic actions which would naturally explore.
